@@ -1,0 +1,36 @@
+# Node / Astro
+node_modules/
+frontend/dist/
+frontend/.astro/
+coverage/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local evaluation database and runtime data
+backend/data/
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+
+# macOS / editors
+.DS_Store
+.idea/

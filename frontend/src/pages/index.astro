@@ -1,0 +1,184 @@
+---
+import "../styles/dashboard.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CMA — Evaluations</title>
+  </head>
+
+  <body>
+    <header>
+      <a href="/" class="brand"><b>C</b> CMA <span>/ Workspace</span></a>
+      <button id="connection" class="secondary">Check backend</button>
+    </header>
+
+    <main>
+      <div class="heading">
+        <div>
+          <p class="eyebrow">DEVELOPER PLATFORM</p>
+          <h1>Model evaluations</h1>
+          <p class="muted">Inspect your pipeline. Understand every run.</p>
+        </div>
+        <span class="badge">Phase 1 · Simulation</span>
+      </div>
+
+      <p id="notice" role="status"></p>
+
+      <section class="card">
+        <div class="section-heading">
+          <h2>New evaluation</h2>
+          <span class="muted">Python / FastAPI simulation</span>
+        </div>
+
+        <form id="evaluation-form">
+          <div class="form-grid">
+            <label>
+              Project name
+              <input
+                id="project"
+                value="model-evaluation"
+                required
+                maxlength="80"
+              />
+            </label>
+
+            <label>
+              Profile
+              <select id="profile">
+                <option value="standard">Standard · 1.5s per stage</option>
+                <option value="quick">Quick · 0.8s per stage</option>
+              </select>
+            </label>
+
+            <label>
+              Run notes
+              <input id="notes" maxlength="500" placeholder="Optional notes" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <span class="muted">No files uploaded. No model executed.</span>
+            <button id="deploy" type="submit">Start evaluation ↗</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="metrics" aria-label="Selected evaluation">
+        <div class="card">
+          <p class="eyebrow">STATUS</p>
+          <strong id="status">No evaluation</strong>
+        </div>
+        <div class="card">
+          <p class="eyebrow">HEALTH SCORE · SIMULATED</p>
+          <strong id="score">—</strong>
+        </div>
+        <div class="card">
+          <p class="eyebrow">ELAPSED SIMULATION TIME</p>
+          <strong id="duration">—</strong>
+        </div>
+      </section>
+
+      <section class="card activity">
+        <div class="section-heading">
+          <div>
+            <h2 id="run-title">Deployment activity</h2>
+            <p id="run-id" class="muted">Start or select an evaluation.</p>
+          </div>
+          <div class="button-group">
+            <button id="reconnect" class="secondary" disabled>Reconnect</button>
+            <button id="rerun" class="secondary" disabled>Rerun</button>
+            <button id="cancel" class="secondary" disabled>Cancel</button>
+          </div>
+        </div>
+
+        <ol id="stages"></ol>
+
+        <div class="toolbar">
+          <input
+            id="log-search"
+            type="search"
+            placeholder="Search received logs..."
+            aria-label="Search logs"
+          />
+          <label class="checkbox">
+            <input id="autoscroll" type="checkbox" checked /> Auto-scroll
+          </label>
+          <button id="copy" class="secondary">Copy</button>
+          <button id="download" class="secondary">Logs ↓</button>
+          <button id="report" class="secondary">Report ↓</button>
+        </div>
+
+        <pre id="terminal" tabindex="0" aria-label="Evaluation logs">Waiting for deployment...</pre>
+        <div class="console-footer">
+          Live simulation · Scores and resource figures are fixtures.
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+  <div>
+    <h2>Evaluation history</h2>
+    <p class="muted">
+      Last 30 viewed runs · Server records persist in SQLite
+    </p>
+  </div>
+
+  <div class="button-group">
+    <button id="sync-history" class="secondary">
+      Load server history
+    </button>
+
+    <button id="clear" class="secondary">
+      Clear device cache
+    </button>
+  </div>
+</div>
+        <div class="toolbar history-tools">
+          <input
+            id="history-search"
+            type="search"
+            placeholder="Search project or run ID..."
+            aria-label="Search history"
+          />
+          <select id="history-filter" aria-label="Filter history by status">
+            <option value="">All statuses</option>
+            <option value="queued">Queued</option>
+            <option value="running">Running</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Project / Run</th>
+                <th>Started</th>
+                <th>Last known status</th>
+                <th>Score</th>
+                <th>Elapsed</th>
+              </tr>
+            </thead>
+            <tbody id="history"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer>
+  CMA / Developer Platform
+  <span>Local demo · Persistent history · Simulated execution</span>
+</footer>
+    </main>
+
+    <script>
+  import "../scripts/dashboard";
+  import "../scripts/workspace";
+</script>
+  </body>
+</html>
